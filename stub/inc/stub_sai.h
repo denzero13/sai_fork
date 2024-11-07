@@ -16,7 +16,7 @@
  */
 
 #if !defined (__STUBAI_H_)
-#define __STUBSAI_H_
+#define __STUBAI_H_
 
 #include <sai.h>
 #include <unistd.h>

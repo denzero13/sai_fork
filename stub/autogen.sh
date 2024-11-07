@@ -58,8 +58,14 @@ if test $? = 1; then
     exit 1
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    LIBTOOLIZE_CMD="glibtoolize"
+else
+    LIBTOOLIZE_CMD="libtoolize"
+fi
+
 # make sure libtool is up-to-date
-lt_ver=`libtoolize --version | head -n 1 | awk '{print $4}'`
+lt_ver=`$LIBTOOLIZE_CMD --version | head -n 1 | awk '{print $4}'`
 compare_versions 2.4.2 $lt_ver
 if test $? = 1; then
     echo Min libtool version is 2.4.2
@@ -69,7 +75,7 @@ fi
 # handle our own autoconf:
 echo Visiting `pwd`
 aclocal -I config 2>&1 |  grep -v "Warning: underquoted definition of"
-libtoolize --force --copy
+$LIBTOOLIZE_CMD --force --copy
 autoheader
 automake --add-missing --foreign --copy --force
 autoconf
